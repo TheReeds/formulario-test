@@ -1,16 +1,18 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, JsonPipe } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-interview-evaluation',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, JsonPipe],
   templateUrl: './interview-evaluation.component.html',
   styleUrl: './interview-evaluation.component.scss'
 })
 export class InterviewEvaluationComponent {
   private fb = inject(FormBuilder);
+  showModal = false;
+  submittedData: any = null;
 
   evaluationForm: FormGroup = this.fb.group({
     nombre: ['', Validators.required],
@@ -60,22 +62,17 @@ export class InterviewEvaluationComponent {
     this.opciones(questionIndex).removeAt(optionIndex);
   }
 
-  showModal: boolean = false;
-  submittedData: any = null;
-
   onSubmit() {
     if (this.evaluationForm.valid) {
-      console.log('Formulario enviado:', this.evaluationForm.value);
       this.submittedData = this.evaluationForm.value;
       this.showModal = true;
+      console.log('Formulario enviado:', this.submittedData);
     } else {
-      console.log('Formulario inválido');
       this.evaluationForm.markAllAsTouched();
     }
   }
 
   closeModal() {
     this.showModal = false;
-    this.submittedData = null;
   }
 }

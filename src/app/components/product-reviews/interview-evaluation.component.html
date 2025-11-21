@@ -46,8 +46,7 @@
                     <select formControlName="clonar"
                         class="w-1/2 bg-gray-100 border-transparent rounded-md px-4 py-2 focus:bg-white focus:ring-2 focus:ring-green-500 focus:outline-none text-gray-500 appearance-none">
                         <option value="" disabled selected>Seleccionar plantilla</option>
-                        <option value="plantilla1">Plantilla 1</option>
-                        <option value="plantilla2">Plantilla 2</option>
+                        <option value="plantilla1" selected>plantilla 1</option>
                     </select>
                     <div class="pointer-events-none absolute inset-y-0 left-[48%] flex items-center px-2 text-gray-700">
                         <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -170,7 +169,7 @@
 
                     @if (pregunta.get('tipo')?.value === 'abierta') {
                     <div class="mt-4">
-                        <label class="block text-xs font-bold text-gray-700 mb-1">Parametro de IA <span
+                        <label class="block text-xs font-bold text-gray-700 mb-1">Parametro <span
                                 class="text-red-500">*</span></label>
                         <textarea formControlName="parametroIA" rows="2"
                             class="w-full bg-gray-100 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-green-500"></textarea>
@@ -192,32 +191,38 @@
 
             <div class="mt-8 flex justify-end border-t pt-4">
                 <button type="submit"
-                    class="bg-gray-700 hover:bg-gray-300 text-white font-bold py-2 px-8 rounded-lg shadow-md transition-colors">
+                    class="bg-gray-900 hover:bg-gray-800 text-white font-bold py-2 px-8 rounded-lg shadow-md transition-colors">
                     Guardar Formulario
                 </button>
             </div>
 
         </form>
     </div>
-</div>
 
-<!-- Modal -->
-<div *ngIf="showModal"
-    class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center z-50">
-    <div class="relative p-5 border w-full max-w-2xl shadow-lg rounded-md bg-white">
-        <div class="mt-3 text-center">
-            <h3 class="text-lg leading-6 font-medium text-gray-900">Datos Enviados</h3>
-            <div class="mt-2 px-7 py-3">
-                <pre
-                    class="text-sm text-gray-500 text-left bg-gray-100 p-4 rounded overflow-auto max-h-96">{{ submittedData | json }}</pre>
+    @if (showModal) {
+    <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl transform transition-all scale-100">
+            <div class="p-6 border-b border-gray-100 flex justify-between items-center">
+                <h2 class="text-xl font-bold text-gray-800">Payload Enviado</h2>
+                <button (click)="closeModal()" class="text-gray-400 hover:text-gray-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
             </div>
-            <div class="items-center px-4 py-3">
+            <div class="p-6 max-h-[70vh] overflow-y-auto bg-gray-50 m-4 rounded-lg border border-gray-200">
+                <pre class="text-xs text-gray-800 font-mono whitespace-pre-wrap">{{ submittedData | json }}</pre>
+            </div>
+            <div class="p-4 border-t border-gray-100 flex justify-end">
                 <button (click)="closeModal()"
-                    class="px-4 py-2 bg-indigo-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-300">
+                    class="bg-gray-900 hover:bg-gray-800 text-white px-6 py-2 rounded-lg font-medium text-sm">
                     Cerrar
                 </button>
             </div>
         </div>
     </div>
-</div>
+    }
+
 </div>
